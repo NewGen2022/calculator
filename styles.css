@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Madimi+One&display=swap');
+
+*{
+    font-family: 'Madimi One', sans-serif;
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #27272b;
+}
+
+#wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 8vh;
+}
+
+#calculator{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 10px;
+    height: 65%;
+    width: 90vw;
+    min-width: 250px;
+    max-width: 400px;
+    background-color: rgb(120, 120, 121);
+    padding: 25px;
+}
+
+#screen{
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+}
+
+#history{
+    background-color: aliceblue;
+    border-radius: 10px 10px 0px 0px;
+    height: 50%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding-right: 20px;
+    padding-top: 15px;
+    color: rgb(100, 100, 100);
+}
+
+#output{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding-right: 20px;
+    font-size: 26px;
+    background-color: aliceblue;
+    border-radius: 0px 0px 10px 10px;
+    height: 100%;
+}
+
+#buttons{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    margin-top: 30px;
+    gap: 10px;
+}
+
+.row{
+    display: flex;
+    gap: 10px;
+}
+
+button{
+    width: 65px;
+    height: 65px;
+    flex: 1;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    font-size: 18px;
+    background-color: rgb(230, 255, 247);
+}
+button:hover{
+    box-shadow: 0 0 5px rgb(92, 255, 206);
+    transform: scale(1.05);
+}
+button:active{
+    color: rgb(0, 255, 179);
+    background-color: rgb(255, 255, 255);
+    transform: scale(0.98);
+}
+
+#clear{
+    flex: 1;
+    background-color: rgb(255, 96, 96);
+}
+#clear:hover{
+    box-shadow: 0 0 5px rgb(255, 0, 0);
+}
+#clear:active{
+    color: rgb(255, 0, 0);
+    background-color: rgb(255, 155, 155);
+}
+
+#delete{
+    flex: 1;
+    background-color: rgb(114, 114, 255);
+}
+#delete:hover{
+    box-shadow: 0 0 5px rgb(0, 0, 255);
+}
+#delete:active{
+    color: rgb(0, 0, 255);
+    background-color: rgb(165, 165, 255);
+    transform: scale(0.98);
+}
+
+#remainder {
+    flex: 2.42;
+}
+
+footer{
+    color: #e0e0e0;
+    text-align: center;
+    margin-top: 6vh;
+}
