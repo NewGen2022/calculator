@@ -36,7 +36,7 @@ body{
 #screen{
     display: flex;
     flex-direction: column;
-    height: 100px;
+    height: 10vh;
 }
 
 #history{
@@ -69,6 +69,25 @@ body{
     justify-content: center;
     margin-top: 30px;
     gap: 10px;
+}
+
+#all-history{
+    display: flex;
+    flex-direction: column;
+    flex-flow: column-reverse;
+    justify-content: center;
+    text-align: center;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 10px;
+    width: 90vw;
+    max-height: 550px;
+    min-width: 100px;
+    max-width: 200px;
+    background-color: rgb(43, 43, 43);
+    padding: 25px;
+    color: rgb(224, 224, 224);
+    margin-left: 10px;
+    overflow-wrap: break-word;
 }
 
 .row{
@@ -122,7 +141,7 @@ button:active{
 }
 
 #remainder {
-    flex: 2.42;
+    flex: 2.32;
 }
 
 footer{
