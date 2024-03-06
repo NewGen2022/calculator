@@ -45,13 +45,20 @@ function updateHistory() {
     }
 }
 
-function updateAllHistory(){
-    if (allHistory.children.length >= MAX_HISTORY_ENTRIES) {
-        allHistory.removeChild(allHistory.children[1]);
+function updateAllHistory() {
+    const entryHeight = 40;
+
+    if (allHistory.clientHeight + entryHeight > 550) {
+        const remainingSpace = 550 - entryHeight;
+
+        while (allHistory.clientHeight > remainingSpace) {
+            allHistory.removeChild(allHistory.children[1]);
+        }
     }
-    
-    allHistory.innerHTML += `<p>${firstOperand} ${currentOperator} ${secondOperand} = ${result}</p>`
+
+    allHistory.innerHTML += `<p>${firstOperand} ${currentOperator} ${secondOperand} = ${result}</p>`;
 }
+
 
 function updateResultOutput() {
     resultOutput.textContent = currentInput !== '' ? currentInput : result;
@@ -126,4 +133,3 @@ function clearCalculator() {
     updateResultOutput();
     history.textContent = '';
 }
-
