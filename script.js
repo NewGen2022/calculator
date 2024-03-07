@@ -6,23 +6,20 @@ let currentOperator = null;
 let result = 0;
 
 const buttons = document.querySelectorAll('button');
-const maxCurrentInputLength = 18;
-const history = document.getElementById('history')
-const allHistory = document.getElementById('all-history')
-const MAX_HISTORY_ENTRIES = 9;
+const history = document.getElementById('history');
+const allHistory = document.getElementById('all-history');
+const signs = ['+', '-', '*', '/', '%', 'Enter', 'Backspace']
 
 buttons.forEach((button) => {
-    button.addEventListener('click', (e) => {
-        handleButtonClick(e.target.textContent);
-    });
+    button.addEventListener('click', () => handleButtonClick(button.textContent));
 });
 
 function handleButtonClick(value) {
-    if ((isNumeric(value) || (value === '.' && !currentInput.includes('.')))) {
+    if (isNumeric(value) || (value === '.' && !currentInput.includes('.'))) {
         currentInput += value;
     } else if (value === 'Clear') {
         clearCalculator();
-    } else if (value === 'Delete') {
+    } else if (value === 'Delete' || value === 'Backspace') {
         currentInput = currentInput.slice(0, -1);
     } else if (currentOperator) {
         handleOperation(value);
@@ -33,16 +30,13 @@ function handleButtonClick(value) {
         updateResultOutput();
     }
 
-    updateHistory()
+    updateHistory();
     updateResultOutput();
 }
 
 function updateHistory() {
-    if (currentOperator) {
-        history.textContent = `${firstOperand} ${currentOperator} ${currentInput}`;
-    } else {
-        history.textContent = '';
-    }
+    const displayOperator = (currentOperator === 'Enter') ? '=' : currentOperator;
+    history.textContent = currentOperator ? `${firstOperand} ${displayOperator} ${currentInput}` : '';
 }
 
 function updateAllHistory() {
@@ -50,18 +44,18 @@ function updateAllHistory() {
 
     if (allHistory.clientHeight + entryHeight > 550) {
         const remainingSpace = 550 - entryHeight;
-
         while (allHistory.clientHeight > remainingSpace) {
             allHistory.removeChild(allHistory.children[1]);
         }
     }
 
-    allHistory.innerHTML += `<p>${firstOperand} ${currentOperator} ${secondOperand} = ${result}</p>`;
+    const displayOperator = (currentOperator === 'Enter') ? '=' : currentOperator;
+    allHistory.innerHTML += `<p>${firstOperand} ${displayOperator} ${secondOperand} = ${result}</p>`;
 }
 
 
 function updateResultOutput() {
-    resultOutput.textContent = currentInput !== '' ? currentInput : result;
+    resultOutput.textContent = currentInput || result;
 }
 
 function isNumeric(value) {
@@ -79,47 +73,32 @@ function handleOperation(operator) {
     } else {
         currentOperator = operator;
     }
-    
+
 }
 
 function calculateResult() {
-    let num1 = parseFloat(firstOperand);
-    let num2 = parseFloat(secondOperand);
+    const num1 = parseFloat(firstOperand);
+    const num2 = parseFloat(secondOperand);
 
     switch (currentOperator) {
-        case '+':
-            result = num1 + num2;
-            break;
-        case '-':
-            result = num1 - num2;
-            break;
-        case '*':
-            result = num1 * num2;
-            break;
-        case '/':
-            if (num2 !== 0) {
-                result = num1 / num2;
-            } else {
-                alert("Cannot divide by zero!");
-                clearCalculator();
-                return;
-            }
-            break;
-        case '%':
-            result = num1 % num2;
-            break;
-        default:
-            break;
+        case '+': result = num1 + num2; break;
+        case '-': result = num1 - num2; break;
+        case '*': result = num1 * num2; break;
+        case '/': result = num2 !== 0 ? num1 / num2 : (alert("Cannot divide by zero!"), clearCalculator()); break;
+        case '%': result = num1 % num2; break;
+        case '=':
+        case 'Enter': result = num1; break;
+        default: break;
     }
 
     // console.log(result, currentInput, firstOperand, secondOperand, currentOperator);
-    
-    updateHistory()
-    updateAllHistory()
 
-    currentInput = result.toString();
+    updateHistory();
+    updateAllHistory();
+
+    currentInput = Number(result.toFixed(7));
     currentOperator = null;
-    firstOperand = currentInput
+    firstOperand = currentInput;
 
     // console.log(result, currentInput, firstOperand, secondOperand, currentOperator);
 }
@@ -132,4 +111,18 @@ function clearCalculator() {
     result = 0;
     updateResultOutput();
     history.textContent = '';
+}
+
+document.addEventListener('keydown', function(event) {
+    const pressedKey = event.key;
+
+    handleKeyboardKey(pressedKey)
+
+    console.log('Key pressed: ' + pressedKey);
+});
+
+function handleKeyboardKey(value){
+    if (signs.includes(value) || isNumeric(value)){
+        handleButtonClick(value)
+    }
 }
